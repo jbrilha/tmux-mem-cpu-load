@@ -31,6 +31,8 @@ set(tmux-mem-cpu-load_VERSION
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 # generate header file to handle version
 configure_file(
   "${PROJECT_SOURCE_DIR}/common/version.h.in" "${PROJECT_BINARY_DIR}/version.h"

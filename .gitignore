@@ -20,6 +20,8 @@ version.h
 config.h
 CTestTestfile.cmake
 DartConfiguration.tcl
+.cache/
+compile_commands.json
 
 # Ninja generated #
 ###################
