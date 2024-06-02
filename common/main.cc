@@ -41,6 +41,7 @@ std::string cpu_string( CPU_MODE cpu_mode, unsigned int cpu_usage_delay, unsigne
 {
 
   float percentage;
+  int width = 5;
   float multiplier = 1.0f;
 
   //output stuff
@@ -58,9 +59,11 @@ std::string cpu_string( CPU_MODE cpu_mode, unsigned int cpu_usage_delay, unsigne
   }
 
   // if percentage*multiplier >= 100, remove decimal point to keep number short
-  if ( percentage*multiplier >= 100.0f )
-  {
+  if ( percentage*multiplier >= 100.0f ) {
     oss.precision( 0 );
+    width = 6;
+  } else if ( percentage*multiplier < 10.0f ) {
+    width = 4; 
   }
 
   unsigned int percent = static_cast<unsigned int>( percentage );
@@ -80,11 +83,20 @@ std::string cpu_string( CPU_MODE cpu_mode, unsigned int cpu_usage_delay, unsigne
     }
   }
 
+  oss.width( width );
+  oss.setf( std::ios::fixed, std::ios::floatfield );
+  oss.precision( 1 );
+  oss.fill(' ' );
+  oss << std::right << percentage * multiplier;
+  oss << "% ";
+
   if( use_vert_graph )
   {
-    oss << "▕";
+    // oss << "▕";
+    // // oss << "🮇";
     oss << get_graph_vert( unsigned( percentage ) );
-    oss << "▏";
+    // // oss << "▎";
+    // oss << "▏";
   }
   else if( graph_lines > 0)
   {
@@ -92,12 +104,7 @@ std::string cpu_string( CPU_MODE cpu_mode, unsigned int cpu_usage_delay, unsigne
     oss << get_graph_by_percentage( unsigned( percentage ), graph_lines );
     oss << "]";
   }
-  oss.width( 6 );
-  oss.setf( std::ios::fixed, std::ios::floatfield );
-  oss.precision( 1 );
-  oss.fill( ' ' );
-  oss << std::right << percentage * multiplier;
-  oss << "%";
+
   if( use_colors )
   {
     if( use_powerline_left )
@@ -292,11 +299,11 @@ int main( int argc, char** argv )
   MemoryStatus memory_status;
   mem_status( memory_status );
   std::cout << mem_string( memory_status, mem_mode, use_colors, use_powerline_left, use_powerline_right, segments_to_left, left_color )
-    << cpu_string( cpu_mode, cpu_usage_delay, graph_lines, use_colors, use_powerline_left, use_powerline_right, use_vert_graph )
-    << load_string( use_colors, use_powerline_left, use_powerline_right, averages_count, segments_to_right, right_color );
+            << cpu_string( cpu_mode, cpu_usage_delay, graph_lines, use_colors, use_powerline_left, use_powerline_right, use_vert_graph )
+            << (averages_count > 0 ? load_string( use_colors, use_powerline_left, use_powerline_right, averages_count, segments_to_right, right_color) : "");
+            // can avoid calling the method, make just a fraction snappier
 
   std::cout << std::endl;
 
   return EXIT_SUCCESS;
 }
-

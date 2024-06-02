@@ -121,4 +121,3 @@ std::string load_string( bool use_colors,
 
   return ss.str();
 }
-

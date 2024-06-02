@@ -34,7 +34,7 @@ std::string mem_string( const MemoryStatus & mem_status,
 {
   std::ostringstream oss;
   // Change the percision for floats, for a pretty output
-  oss.precision( 2 );
+  oss.precision( 1 );
   oss.setf( std::ios::fixed | std::ios::right );
 
   unsigned int color = static_cast< unsigned int >((100 * mem_status.used_mem) / mem_status.total_mem);
@@ -93,16 +93,24 @@ std::string mem_string( const MemoryStatus & mem_status,
     const float percentage_mem = mem_status.used_mem /
       static_cast<float>( mem_status.total_mem ) * 100.0;
 
-    oss << percentage_mem << '%';
+    oss << " " << percentage_mem << "% ";
     break;
-    }
+  }
   default: // Default mode, just show the used/total memory in MB
-    if(mem_status.used_mem>10000 && mem_status.total_mem>10000)
-      oss<<static_cast<unsigned int>(mem_status.used_mem/1024)<<"/"<<static_cast<unsigned int>(mem_status.total_mem/1024)<<"GB";
-    else if(mem_status.used_mem<10000 && mem_status.total_mem>10000)
-      oss<<static_cast<unsigned int>(mem_status.used_mem)<<"MB/"<<static_cast<unsigned int>(mem_status.total_mem/1024)<<"GB";
-    else
-      oss<<static_cast<unsigned int>(mem_status.used_mem)<<"/"<<static_cast<unsigned int>(mem_status.total_mem)<<"MB";
+    if (mem_status.used_mem > 10000 && mem_status.total_mem > 10000) {
+      oss << static_cast<unsigned int>(mem_status.used_mem / 1024) << "/"
+          << static_cast<unsigned int>(mem_status.total_mem / 1024) << "GB";
+
+    } else if (mem_status.used_mem < 10000 && mem_status.total_mem > 10000) {
+      // oss << static_cast<unsigned int>(mem_status.used_mem / 1024) << "GB/"
+      oss << (mem_status.used_mem / 1024) << "/"
+          << static_cast<unsigned int>(mem_status.total_mem / 1024) << "GB ";
+
+    } else {
+      oss << static_cast<unsigned int>(mem_status.used_mem) << "/"
+          << static_cast<unsigned int>(mem_status.total_mem) << "MB";
+
+    }
   }
 
   if( use_colors )
@@ -117,6 +125,8 @@ std::string mem_string( const MemoryStatus & mem_status,
     }
   }
 
+  // oss << "|";
+  oss << "█";
+
   return oss.str();
 }
-
