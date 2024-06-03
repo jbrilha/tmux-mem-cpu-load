@@ -125,8 +125,8 @@ std::string mem_string( const MemoryStatus & mem_status,
     }
   }
 
-  // oss << "|";
-  oss << "█";
+  oss << "|";
+  // oss << "█";
 
   return oss.str();
 }

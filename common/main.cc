@@ -62,8 +62,6 @@ std::string cpu_string( CPU_MODE cpu_mode, unsigned int cpu_usage_delay, unsigne
   if ( percentage*multiplier >= 100.0f ) {
     oss.precision( 0 );
     width = 6;
-  } else if ( percentage*multiplier < 10.0f ) {
-    width = 4; 
   }
 
   unsigned int percent = static_cast<unsigned int>( percentage );
@@ -92,11 +90,11 @@ std::string cpu_string( CPU_MODE cpu_mode, unsigned int cpu_usage_delay, unsigne
 
   if( use_vert_graph )
   {
-    // oss << "▕";
+    oss << "▕";
     // // oss << "🮇";
     oss << get_graph_vert( unsigned( percentage ) );
     // // oss << "▎";
-    // oss << "▏";
+    oss << "▏";
   }
   else if( graph_lines > 0)
   {
