@@ -64,7 +64,7 @@ std::string get_graph_by_value( unsigned value, unsigned max, unsigned len )
 std::string get_graph_vert( unsigned value )
 {
   static const std::map<unsigned, std::string> graph_chars = {
-    { 0, "▁" }, { 10, "▁" }, { 20, "▂" }, { 30, "▃" }, { 40, "▄" },
+    { 0, " " }, { 10, "▁" }, { 20, "▂" }, { 30, "▃" }, { 40, "▄" },
     { 50, "▅" }, { 60, "▆" }, { 70, "▇" }, { 80, "█" }, { 90, "▲" }
   };
 
