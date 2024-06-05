@@ -299,7 +299,7 @@ int main( int argc, char** argv )
   std::cout << mem_string( memory_status, mem_mode, use_colors, use_powerline_left, use_powerline_right, segments_to_left, left_color )
             << cpu_string( cpu_mode, cpu_usage_delay, graph_lines, use_colors, use_powerline_left, use_powerline_right, use_vert_graph )
             << (averages_count > 0 ? load_string( use_colors, use_powerline_left, use_powerline_right, averages_count, segments_to_right, right_color) : "");
-            // can avoid calling the method, make just a fraction snappier
+            // can avoid calling the method, makes it just a fraction snappier
 
   std::cout << std::endl;
 
